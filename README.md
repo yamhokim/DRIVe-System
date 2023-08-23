@@ -25,7 +25,7 @@ The task and protocol were developed by Suzan Ayas. Studies have shown that part
 
 Observers are to use the given data presented to them (Eye aspect ratio, Mouth aspect ratio, number of blinks, number of yawns, and facial tracking footage) to support their vote. Observers give one vote for every "phase" of the rating session, after a predetermined elapsed time. These phases are done in time intervals, and observers cannot vote for a specific interval once that time window has passed. 
 
-## General Overview of the System :
+## General Overview of the GUI :
 
 Shown below is an image of the GUI that the observers will be interacting with. The GUI was created through the use of Python's PyQt5 library.
 
@@ -63,6 +63,56 @@ Below this, there is an animated graph created using the PyQtGraph library which
 
 ![image](https://github.com/yamhokim/DRIVe-System/assets/116863345/6e05b90e-ea52-4bf0-bed2-c1dd355f834e)
 
-## Description of Files:
+## General Overview of System Backend:
 
+Aside from the GUI that the observers interact with, the system has multiple features running in the backend. For the drowsiness detection portion of the system, I decided to use a computer-vision-based method. The application builds upon Mediapipe's deep-learning-based facial landmark solution which provides accurate real-time detection and tracking of 468 individual facial landmarks. This was used in conjunction with Python's OpenCV library to read individual frames from the video feed, apply the facial landmark solution, localize the areas of interest (eyes, mouth, areas around both eyes and mouth), and calculate the specific metrics (EAR, MAR, PERCLOS). Below is a simple flowchart showing the backend functionality of this method:
+
+![image](https://github.com/yamhokim/DRIVe-System/assets/116863345/301820e8-ba3f-48aa-9509-1d8200aac380)
+
+To increase the FPS of the webcam while the system was running, I utilized Python multithreading by creating a new thread to handle the polling of the camera for new frames. This freed the main thread from taking on this task and instead allowed it to focus on the processing of the frames. This helped in increasing the FPS by around 40%. The code for this is found within the WebcamVideoStream.py file.
+
+Multithreading was also used to ensure that both the webcam footage shown in the OpenCV window and the animated graph created through PyQtGraph could be shown simultaneously without blocking one another from updating.
+
+**Description of Files** :
+- **main.py**: Main file to run the application and start the program
+- **MainWindow.py**: Main GUI window. Changes to event handling and timers are done in this file.
+- **ui_new_drive_rating_gui.py**: Contains adding and styling of the interface widgets for the main GUI Window
+- **ui_protocol_info.py**: Contains adding and styling of the widgets for the protocol GUI Window
+- **ui_drive_splashscreen.py**: Contains adding and styling of the widgets for the splash screen GUI Window
+- **WebcamWorker.py**: Python file that is threaded to run the eye and mouth tracking program alongside the GUI. EAR and MAR calculations and facial landmarking (for eye and mouth tracking) is executed through this file.
+- **WebacamVideoStream.py**: Code for using OpenCV's video streaming methods to use the webcam and stream real-time or a prerecorded video file.
+- **SplashScreen.py**: Contains adding and styling of the widgets for the Splashscreen GUI Window
+- **PopUp.py**: Pop-up window PyQT class, for users to enter their name
+- **PlotWindow.py**: PyQT Class for the window that shows the plots. 
+- **EAR.py** and **MAR.py**: Calculations to get Eye Aspect Ratio and Mouth Aspect Ratio, based on frame data from webcam and facial landmarks from OpenCV
+- **csv_writer.py**: Class for the CSV writer objects to write data to a .csv file
+- **InfoPopUp.py**: PyQt Class for the window that pops up upon pressing the info button. Provides users with the protocol for the different states.
+- **ThresholdCalculator.py**: Contains all backend functionality for the window where the modified EAR threshold is calculated.
+- **ThresholdWorker.py**: QtThread object that runs the webcam footage when logging for open and closed-eye EAR to calculate the EAR threshold.
+- **ui_modified_ear_threshold_window.py**: Contains adding and styling of the widgets for the threshold calculation window that occurs before the rating starts.
+
+## How to Use:
+
+- Running the **main.py** will start the program. A splash screen is shown, then the main GUI interface appears.
+
+**Start**
+
+- Observer is prompted to enter their name
+- Upon entering the driver's name, the modified EAR threshold window will open where the user will have the press the "OPEN" and "CLOSED" buttons while the driver is opening and closing their eyes, respectively
+- Upon getting the modified EAR threshold, the webcam stream will open and EAR plot window will appear. Real-time eye tracking and EAR plot updates will occur
+- Every x minutes, the observers will need to rate the state of the driver, at which point a message will appear on top of the webcam footage informing how much time is left to make a decision
+- After the message disappears, the ratings will be logged, and the cycle will repeat
+
+**Info**
+
+- The info button will open the protocol information in a seperate window
+
+**Stop**
+
+- The stop button will end real-time streaming and stop the rating session.
+- Two CSV files and two PNG files will be outputted as a result of ending the program:
+   1) {name of observer}-Data.csv : Tuples in the form of [Time (s),EAR, MAR, Blinked (Y/N), Yawned (Y/N)] is outputted for every frame since the beginning of the rating session
+   2) {name of observer}-observer-ratings-{date}.csv: Tuples in the form [Interval #,Interval Start Time,Observer 1 Rating,Observer 2 Rating] is outputted for each rating interval during the session
+   3) {name}-eyedata.png will show the plot of EAR and number of blinks throughout the rating session.
+   4) {name}-mouthdata.png will show the plot of MAR and number of yawns throughout the rating session.
 
