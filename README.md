@@ -28,9 +28,41 @@ Observers are to use the given data presented to them (Eye aspect ratio, Mouth a
 ## General Overview of the System :
 
 Shown below is an image of the GUI that the observers will be interacting with. The GUI was created through the use of Python's PyQt5 library.
+
 ![image](https://github.com/yamhokim/DRIVe-System/assets/116863345/0b77e8e5-e472-4b49-9446-b048d61cb7af)
+
+The GUI itself has three main features:
+
+**Live Observer Rating System** :
+
+![image](https://github.com/yamhokim/DRIVe-System/assets/116863345/77c67db7-e94a-40d2-a662-4c4668666639)
+
+On the left of the GUI, we have a table with interactive buttons that provide each of the two observers with five different "drowsiness" states to choose from, ranging from ALERT all the way to EXTREMELY DROWSY. Once the "START" button is pressed, the rating portion of the system will begin, where the two observers will be periodically asked to rate the driver's state using one of the five options provided to them. The protocol behind choosing each of the states is provided to the users at any point by pressing the "INFO" button. Doing so will pop up this info screen:
+
+![image](https://github.com/yamhokim/DRIVe-System/assets/116863345/22705502-fdec-4a78-b71f-74b88da67e6e)
+
+Once the "STOP" button is pressed, the webcam will turn off, the graph will reset, and all data will be saved onto the database.
+
+**Live Video Feed** :
+
+The GUI also provides the observers with live webcam footage, showing the observers the physical state of the driver at any point during the duration of the experiment. When the system has not started, a simple camera icon will occupy this area. 
+
+![image](https://github.com/yamhokim/DRIVe-System/assets/116863345/2a6788b6-5819-4105-921e-aed0ce1557e0)
+
+Upon pressing the "START" button, the user will be prompted to fill in the information about the driver and then will be asked to complete a prerequisite stage where the modified eye aspect ratio (EAR) threshold of the driver will be calculated. Since facial features differ by person, the ear threshold will have to be made personal to each person. The user will press the "OPEN" button to get the EAR of the driver with their eyes in a natural open position, and the "CLOSED" button to get the EAR of the driver with their eyes in a closed position. Once both values have been logged, the system will calculate the EAR threshold for the driver, and the webcam footage will now occupy the area the camera icon previously held.
+
+![image](https://github.com/yamhokim/DRIVe-System/assets/116863345/2409dfea-6219-4c8e-999f-92c8a792aa3d)
+
+**Live Data Visualization** :
+
+In addition, the system also provides live data visualization to assist the observers in making their final decisions. To the right of the webcam footage, there are three metrics that the system is specifically looking at: Eye Aspect Ratio (EAR), Mouth Aspect Ratio (MAR), and Percentage of Eye Closure (PERCLOS). The system will be logging these values and providing real-time updates to the values shown in the label.
+
+![image](https://github.com/yamhokim/DRIVe-System/assets/116863345/f4ad1121-661c-46a4-becf-e620fec93b1d)
+
+Below this, there is an animated graph created using the PyQtGraph library which provides a real-time visual representation of the EAR value to the observers.
+
+![image](https://github.com/yamhokim/DRIVe-System/assets/116863345/6e05b90e-ea52-4bf0-bed2-c1dd355f834e)
 
 ## Description of Files:
 
-# How to Use:
 
