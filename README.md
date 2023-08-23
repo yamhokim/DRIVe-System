@@ -116,6 +116,6 @@ Multithreading was also used to ensure that both the webcam footage shown in the
    3) {name}-eyedata.png will show the plot of EAR and number of blinks throughout the rating session.
    4) {name}-mouthdata.png will show the plot of MAR and number of yawns throughout the rating session.
 
-### Project Presentation Poster
+# Project Presentation Poster
 
 ![image](https://github.com/yamhokim/DRIVe-System/assets/116863345/9d636603-beca-4d65-9057-4d1f637491cc)
