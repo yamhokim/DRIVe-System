@@ -4,7 +4,7 @@ Python-based application developed in collaboration with the Human Factors and A
 
 It is recommended to interpret this code in Python Version 3.7 or higher, as earlier versions may not include the libraries required.
 
-##Project Motivation:
+## Project Motivation:
 
 - The recent massive increase in urbanization has resulted in the exponential increase in automobile use in recent years, subsequently leading to an increase in the number of road accidents and an all-time high in the number of fatalities related to transportation
 - There are currently several driver monitoring systems (DMS) on the market, but a scoping review performed within the HFAST Lab revealed that a majority of research related to this sector focuses on the development of technology and neglects how the user will interact with the system and what interventions will be activated upon a successful detection of driver drowsiness
