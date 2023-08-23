@@ -28,7 +28,7 @@ Observers are to use the given data presented to them (Eye aspect ratio, Mouth a
 ## General Overview of the System :
 
 Shown below is an image of the GUI that the observers will be interacting with. The GUI was created through the use of Python's PyQt5 library.
-![](https://user-images.githubusercontent.com/116863345/262785426-d900f4b7-864d-4f43-9e39-cae8a3045f31.png
+![Picture of GUI](https://user-images.githubusercontent.com/116863345/262785426-d900f4b7-864d-4f43-9e39-cae8a3045f31.png
 
 ## Description of Files:
 
